@@ -1,0 +1,29 @@
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: random-logger
+  labels:
+    app: random-logger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-logger
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: random-logger
+    spec:
+      containers:
+      - image: satchpx/random-logger:latest
+        name: random-logger
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+      volumes:
